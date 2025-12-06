@@ -8,13 +8,13 @@ const Banner = () => {
 
     <div className="text-center lg:ml-5 lg:text-left">
       <h1 className="text-5xl font-bold text-white">
-        Public Infrastructure Issue Reporting System
+        Report City Issues Effortlessly
       </h1>
       <p className="mt-4 text-white/90 text-lg">
         Our platform allows citizens to report issues such as potholes, broken streetlights, water leakage and more directly to the relevant authorities
       </p>
       <div className="mt-6 flex gap-4 justify-center lg:justify-start">
-        <button className="px-6 py-3 bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold hover:scale-105 transition ease-in-out rounded-2xl ">Report Issue</button>
+        <button className="px-6 py-3 bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold hover:scale-105 transition ease-in-out rounded-2xl ">Report an Issue</button>
       </div>
     </div>
     <div className="flex justify-center">
