@@ -10,7 +10,7 @@ const LatestResolveIssues = () => {
         Latest Resolve Issues
       </h1>
             <Link
-        className=" font-bold bg-linear-to-r from-teal-600 to-teal-500 text-transparent bg-clip-text mb-8 hover:text-teal-700" >
+        className=" font-bold bg-linear-to-r from-teal-600 to-teal-500 text-transparent bg-clip-text mb-8 hover:text-teal-700 hover:underline" >
         View all Issues
       </Link>
             </div>
