@@ -4,8 +4,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import 'animate.css';
 import { useForm } from 'react-hook-form';
-import UseAuth from '../Hooks/UseAuth';
-import SocialLogIn from './SocialLogIn';
+import UseAuth from '../../Hooks/UseAuth';
+import SocialLogIn from '../SocialLogIn';
 import Swal from 'sweetalert2';
 
 const Login = () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Banner = () => {
   return (
@@ -14,7 +15,8 @@ const Banner = () => {
               Our platform allows citizens to report issues such as potholes, broken streetlights, water leakage and more directly to the relevant authorities
             </p>
             <div className="mt-6 flex gap-4 justify-center lg:justify-start">
-              <button className="px-6 py-3 bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold hover:scale-105 transition ease-in-out rounded-2xl ">Report an Issue</button>
+              <Link to={"dashboard/report-issue"}>
+              <button className="px-6 py-3 bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold hover:scale-105 transition ease-in-out rounded-2xl ">Report an Issue</button></Link>
             </div>
           </div>
           <div className="flex justify-center">

@@ -33,7 +33,7 @@ const Navbar = () => {
               <NavLink to={"all-issues"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}>All Issues</NavLink>
-              <NavLink to={'report-issue'} className={({ isActive }) =>
+              <NavLink to={'dashboard/report-issue'} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}>Report Issue</NavLink>
               <NavLink to={"about-us"} className={({ isActive }) =>
@@ -66,7 +66,7 @@ const Navbar = () => {
             </NavLink>
 
             <NavLink
-              to={'report-issue'}
+              to={'dashboard/report-issue'}
               className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`
@@ -95,8 +95,9 @@ const Navbar = () => {
                   className='h-12 w-12 rounded-full hover:scale-105 transition ease-in-out duration-500'
                 /></div>
                 <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                  <li className='bg-linear-to-r from-teal-400 to-orange-300 text-transparent bg-clip-text font-bold '> {user.displayName}</li>
+                  <li className='bg-linear-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text font-bold '> {user.displayName}</li>
                   <li className='bg-linear-to-r from-teal-400 to-teal-300 text-transparent bg-clip-text font-semibold mb-3'>{user.email}</li>
+                  <Link to={"/dashboard"}><li><button className="btn bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  hover:scale-105 transition ease-in-out rounded-2xl mb-2">Dashboard</button></li></Link>
                   <li><button onClick={handleLogOut} className="btn bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  hover:scale-105 transition ease-in-out rounded-2xl ">
                     <LuLogIn />
                     LogOut

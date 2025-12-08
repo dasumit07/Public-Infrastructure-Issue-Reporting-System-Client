@@ -3,12 +3,14 @@ import MainLayout from "../Layout/MainLayout";
 import Home from "../Pages/Home";
 import NotFound from "../Pages/NotFound";
 import AuthLayout from "../Layout/AuthLayout";
-import Login from "../Pages/Login";
-import Register from "../Pages/Register";
-import ReportAnIssue from "../Pages/ReportAnIssue";
+import Login from "../Pages/Auth/Login";
+import Register from "../Pages/Auth/Register";
 import PrivateRoute from "./PrivateRoute";
 import AboutUs from "../Pages/AboutUs";
 import AllIssues from "../Pages/AllIssues";
+import DashBoardLayout from "../Layout/DashBoardLayout";
+import ReportAnIssue from "../Pages/Dashboard/ReportAnIssue";
+import MyIssue from "../Pages/Dashboard/MyIssue";
 
 export const router = createBrowserRouter([
   {
@@ -22,12 +24,6 @@ export const router = createBrowserRouter([
       {
         path: "all-issues",
         element: <AllIssues></AllIssues>
-      },
-      {
-        path: "report-issue",
-        element: <PrivateRoute>
-          <ReportAnIssue></ReportAnIssue>
-        </PrivateRoute>
       },
       {
         path: "about-us",
@@ -46,6 +42,24 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register></Register>
+      }
+    ]
+  },
+  {
+    path: "dashboard",
+    element: <PrivateRoute>
+      <DashBoardLayout></DashBoardLayout>
+    </PrivateRoute>,
+    children: [
+      {
+        path: "report-issue",
+        element: <PrivateRoute>
+          <ReportAnIssue></ReportAnIssue>
+        </PrivateRoute>
+      },
+      {
+        path: "my-issue",
+        element: <MyIssue></MyIssue>
       }
     ]
   },
