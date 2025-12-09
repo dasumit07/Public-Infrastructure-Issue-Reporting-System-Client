@@ -11,6 +11,7 @@ import AllIssues from "../Pages/AllIssues";
 import DashBoardLayout from "../Layout/DashBoardLayout";
 import ReportAnIssue from "../Pages/Dashboard/ReportAnIssue";
 import MyIssue from "../Pages/Dashboard/MyIssue";
+import Details from "../Pages/Card/Details";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,12 @@ export const router = createBrowserRouter([
       {
         path: "all-issues",
         element: <AllIssues></AllIssues>
+      },
+      {
+        path: "/issues/:id",
+          element: <PrivateRoute>
+            <Details></Details>
+          </PrivateRoute>,
       },
       {
         path: "about-us",

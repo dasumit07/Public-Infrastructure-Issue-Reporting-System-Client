@@ -5,10 +5,12 @@ import Swal from 'sweetalert2';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import axios from 'axios';
 import UseAuth from '../../Hooks/UseAuth';
+import { useNavigate } from 'react-router';
 
 const ReportAnIssue = () => {
     const axiosSecure = UseAxiosSecure();
     const { user } = UseAuth();
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -58,6 +60,7 @@ const ReportAnIssue = () => {
           text: "Your issue has been reported successfully.",
           icon: "success",
         });
+        navigate("/dashboard/my-issue");
       } catch (error) {
         console.error(error);
         Swal.fire("Error", "Something went wrong!", "error");
@@ -67,7 +70,7 @@ const ReportAnIssue = () => {
 };
     return (
         <div className="max-w-xl mx-auto p-6">
-            <h1 className=" mb-6 bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text text-2xl lg:text-3xl font-bold">Report an Issue</h1>
+            <h1 className=" mb-6 bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text text-2xl lg:text-3xl font-bold">Report an Issue !</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
 
@@ -124,7 +127,7 @@ const ReportAnIssue = () => {
                 <div>
                     <input
                         type="file"
-                        className="file-input file-input-error border rounded w-full"
+                        className="file-input file-input-accent border rounded w-full"
                         {...register("image")}
                     />
                 </div>
@@ -144,7 +147,7 @@ const ReportAnIssue = () => {
 
                 {/* Submit */}
                 <button
-                    className="w-full  btn bg-red-500 hover:bg-linear-to-r from-red-700 to-red-500 text-white font-semibold  hover:scale-105 transition ease-in-out rounded-2xl"
+                    className="w-full  btn bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  hover:scale-105 transition ease-in-out rounded-2xl"
                 >
                     Submit Issue
                 </button>
