@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { FaEdit } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { SiBoosty } from 'react-icons/si';
+import { FiAlertCircle } from "react-icons/fi";
 
 const Details = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
@@ -94,6 +95,16 @@ const Details = () => {
             Swal.fire("Error", "Something went wrong!", "error");
         }
     };
+    const handleBoost = async() => {
+        const paymentInfo = {
+            issueId: issue._id,
+            title: issue.title,
+            reporterEmail: issue.reporterEmail,
+        }
+        const res = await axiosSecure.post('/create-payment-intent', paymentInfo);
+        window.location.href = res.data.url;
+        
+    };
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-10 animate__animated animate__fadeInDown">
 
@@ -149,7 +160,7 @@ const Details = () => {
                                 }}
                                 className="px-4 bg-blue-500 hover:bg-linear-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center gap-1"
                             >
-                               <FaEdit /> <span>Edit</span>
+                                <FaEdit /> <span>Edit</span>
                             </button>
 
                             <button
@@ -157,27 +168,65 @@ const Details = () => {
                                 className="px-4 bg-red-500 hover:bg-linear-to-r from-red-700 to-red-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center gap-1"
                             >
 
-                               <RiDeleteBin6Line /> <span>Delete</span>
+                                <RiDeleteBin6Line /> <span>Delete</span>
                             </button>
                         </div> : null
                     }
-
-
-                    <button
+                    {
+                        issue.paymentStatus === 'paid' ?<>
+                        <button
+                        disabled
                         className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
                     >
-                       <SiBoosty /> <span>Boost</span>
-                    </button>
+                        <SiBoosty /> <span>Boosted</span>
+                    </button></> : <>
+                    <div
+                        role="status"
+                        aria-live="polite"
+                        className="my-3 flex items-start gap-3 bg-yellow-50 border-l-4 border-yellow-300 p-3 rounded-md"
+                    >
+                        <div className="text-yellow-600 mt-0.5">
+                            <FiAlertCircle size={18} />
+                        </div>
+
+                        <div>
+                            <p className="text-sm text-gray-800 leading-tight">
+                                <strong>Boost makes your issue High Priority</strong> and increases
+                                visibility.{" "}
+                                <span className="font-medium">This feature may involve an additional cost of 100 TK per issue..</span>
+                            </p>
+
+                            <p className="text-xs text-gray-500 mt-1">
+                                Click <span className="font-semibold">Boost</span> to prioritize your issue.
+                            </p>
+                        </div>
+                    </div>
+                    <button
+                        onClick={handleBoost}
+                        className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
+                    >
+                        <SiBoosty /> <span>Boost</span>
+                    </button></>
+                    }
                 </div>
             </div>
 
-            <div className="text-center mt-12">
+            {
+                user.email === issue.reporterEmail ? <><div className="text-center mt-12">
+                <Link to="/dashboard/my-issue">
+                    <button className="btn bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  rounded-2xl py-2 hover:scale-105 transition ease-in-out">
+                        ← Go to My Issue
+                    </button>
+                </Link>
+            </div></> : <>
+                <div className="text-center mt-12">
                 <Link to="/all-issues">
                     <button className="btn bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  rounded-2xl py-2 hover:scale-105 transition ease-in-out">
                         ← Go Back
                     </button>
                 </Link>
-            </div>
+            </div></>
+            }
             <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box max-w-lg">
                     <h3 className="font-bold text-2xl text-center mb-6 bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text">

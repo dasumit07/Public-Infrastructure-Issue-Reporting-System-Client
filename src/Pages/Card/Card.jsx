@@ -5,7 +5,7 @@ import { AiFillLike } from "react-icons/ai";
 
 const Card = ({ issue }) => {
     return (
-        <div className="bg-white rounded-2xl shadow-md p-4 w-full max-w-sm border hover:shadow-lg transition">
+        <div className="bg-white rounded-2xl shadow-md p-4 w-full max-w-sm border hover:shadow-lg transition animate__animated animate__fadeInDown">
             {/* Image */}
             <img
                 src={issue.imageUrl}
