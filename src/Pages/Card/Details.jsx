@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams } from 'react-router';
+import { Link, useParams, useSearchParams } from 'react-router';
 import UseAuth from '../../Hooks/UseAuth';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
@@ -10,8 +10,11 @@ import { FaEdit } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { SiBoosty } from 'react-icons/si';
 import { FiAlertCircle } from "react-icons/fi";
+import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 
 const Details = () => {
+    const [searchParams] = useSearchParams();
+    const sessionId = searchParams.get('session_id');
     const [selectedIssue, setSelectedIssue] = useState(null);
     const params = useParams();
     const { user } = UseAuth();
@@ -95,7 +98,7 @@ const Details = () => {
             Swal.fire("Error", "Something went wrong!", "error");
         }
     };
-    const handleBoost = async() => {
+    const handleBoost = async(issue) => {
         const paymentInfo = {
             issueId: issue._id,
             title: issue.title,
@@ -105,6 +108,14 @@ const Details = () => {
         window.location.href = res.data.url;
         
     };
+    useEffect(() => {
+        if (sessionId) {
+            axiosSecure.patch(`/payment-success?session_id=${sessionId}`)
+                .then(res => {
+                    console.log(res.data);
+                });
+        }
+    }, [sessionId, axiosSecure]);
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-10 animate__animated animate__fadeInDown">
 
@@ -150,6 +161,10 @@ const Details = () => {
           `}> {issue.status}</span>
                         </p>
                     </div>
+                    {issue.priority === 'High' ? <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text  mb-3">Priority : <span className='bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text'>
+                        {issue.priority}</span></p> : 
+                        <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text  mb-3">Priority : <span className='bg-linear-to-r from-gray-700 to-gray-500 text-transparent bg-clip-text'>
+                        Low</span></p>}
                     {
                         issue?.reporterEmail === user?.email && issue?.status === 'pending' ? <div className="flex items-center justify-between mb-6">
                             <button
@@ -178,7 +193,7 @@ const Details = () => {
                         disabled
                         className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
                     >
-                        <SiBoosty /> <span>Boosted</span>
+                        <SiBoosty /> <span>Boosted</span> <IoCheckmarkDoneSharp />
                     </button></> : <>
                     <div
                         role="status"
@@ -202,7 +217,7 @@ const Details = () => {
                         </div>
                     </div>
                     <button
-                        onClick={handleBoost}
+                        onClick={() => handleBoost(issue)}
                         className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
                     >
                         <SiBoosty /> <span>Boost</span>

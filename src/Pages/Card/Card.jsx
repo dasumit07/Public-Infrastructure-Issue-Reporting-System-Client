@@ -32,14 +32,9 @@ const Card = ({ issue }) => {
                 >
                     {issue.status}
                 </span>
-
-                <span
-                    className={`px-3 py-1 text-xs rounded-full text-white 
-            ${issue.priority === "High" ? "bg-red-600" : "bg-gray-600"}
-          `}
-                >
-                    {issue.priority}
-                </span>
+                {
+                    issue.priority === "High" ? <span className='px-3 py-1 text-xs rounded-full text-white bg-red-600'>High</span> : <span className='px-3 py-1 text-xs rounded-full text-white bg-gray-600'>Low</span>
+                }
             </div>
 
             {/* Location */}
