@@ -13,6 +13,8 @@ import ReportAnIssue from "../Pages/Dashboard/ReportAnIssue";
 import MyIssue from "../Pages/Dashboard/MyIssue";
 import Details from "../Pages/Card/Details";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import ManageUsers from "../Pages/Dashboard/ManageUsers";
+import ManageStaff from "../Pages/Dashboard/ManageStaff";
 
 export const router = createBrowserRouter([
   {
@@ -72,7 +74,15 @@ export const router = createBrowserRouter([
       {
         path: "payment-history",
         element: <PaymentHistory></PaymentHistory>
-      }
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers></ManageUsers>
+      },
+      {
+        path: "manage-staff",
+        element: <ManageStaff></ManageStaff>
+      },
     ]
   },
   {

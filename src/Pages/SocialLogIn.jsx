@@ -3,16 +3,24 @@ import { FcGoogle } from 'react-icons/fc';
 import UseAuth from '../Hooks/UseAuth';
 import { useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
+import UseAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const SocialLogIn = () => {
     const { signInGoogle, setUser, setLoading } = UseAuth();
     const location = useLocation();
     const navigate = useNavigate();
+    const axiosSecure = UseAxiosSecure();
     const from = location.state || '/';
     const handleGoogleSignIn = () => {
         signInGoogle()
             .then(result => {
                 const user = result.user;
+                const userInfo = {
+              email: user?.email,
+              displayName: user?.displayName,
+              photoURL: user?.photoURL
+            }
+            axiosSecure.post('/users', userInfo);
                 setUser(user);
                         Swal.fire({
                           position: "center",

@@ -8,6 +8,7 @@ import SocialLogIn from '../SocialLogIn';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +17,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state || '/';
+  const axiosSecure = UseAxiosSecure();
   const handleRegister = data => {
     const photoFile = data.photoURL[0];
     registerUser(data.email, data.password)
@@ -25,6 +27,13 @@ const Register = () => {
         axios.post(`https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_imageApiKey}`, formData)
           .then(response => {
             const photoURL = response.data.data.display_url;
+            const userInfo = {
+              email: data.email,
+              displayName: data.name,
+              photoURL: photoURL
+            }
+            axiosSecure.post('/users', userInfo)
+
             const userProfile = {
               displayName: data.name,
               photoURL: photoURL
