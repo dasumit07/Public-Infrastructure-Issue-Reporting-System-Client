@@ -19,7 +19,7 @@ const PaymentHistory = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>NO.</th>
+                            <th>#</th>
                             <th>Transaction ID</th>
                             <th>Issue Name</th>
                             <th>Paid Amount</th>

@@ -14,7 +14,7 @@ const ManageStaff = () => {
     const { registerUser, setLoading, updateUserProfile } = UseAuth();
     const axiosSecure = UseAxiosSecure();
     const { data: staffs = [], refetch } = useQuery({
-        queryKey: ['all-staffs'],
+        queryKey: ['staffs'],
         queryFn: async () => {
             const res = await axiosSecure.get('/staffs');
             return res.data;
@@ -55,7 +55,7 @@ const ManageStaff = () => {
                 displayName: data.name,
                 photoURL,
             });
-            refetch();
+            
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -63,6 +63,7 @@ const ManageStaff = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
+            refetch();
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Failed to add staff");
@@ -85,6 +86,7 @@ const ManageStaff = () => {
                     {/* head */}
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
@@ -93,9 +95,10 @@ const ManageStaff = () => {
                         </tr>
                     </thead>
                     {
-                        staffs.map((staff) => <tbody key={staff._id}>
+                        staffs.map((staff, i) => <tbody key={staff._id}>
                             {/* row 1 */}
                             <tr>
+                                <td>{i+1}</td>
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
