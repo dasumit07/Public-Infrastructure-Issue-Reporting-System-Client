@@ -11,7 +11,7 @@ import StaffUpdate from '../../Hooks/StaffUpdate';
 import StaffDelete from '../../Hooks/StaffDelete';
 
 const ManageStaff = () => {
-    const { registerUser, setLoading, updateUserProfile } = UseAuth();
+    const { setLoading } = UseAuth();
     const axiosSecure = UseAxiosSecure();
     const { data: staffs = [], refetch } = useQuery({
         queryKey: ['staffs'],
@@ -23,13 +23,12 @@ const ManageStaff = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm()
     const handleStaff = async (data) => {
         try {
             const photoFile = data.image[0];
-
-            await registerUser(data.email, data.password);
 
             const formData = new FormData();
             formData.append("image", photoFile);
@@ -49,13 +48,7 @@ const ManageStaff = () => {
                 password: data.password
             };
 
-            await axiosSecure.post("/staff", staffInfo);
-
-            await updateUserProfile({
-                displayName: data.name,
-                photoURL,
-            });
-            
+            await axiosSecure.post("/create-staff", staffInfo);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -64,6 +57,8 @@ const ManageStaff = () => {
                 timer: 1500
             });
             refetch();
+            reset();
+            document.getElementById('add_staff_modal').close();
         } catch (error) {
             console.error(error);
             toast.error(error.message || "Failed to add staff");
@@ -74,7 +69,8 @@ const ManageStaff = () => {
     return (
         <div>
             <button
-                onClick={() => {
+                onClick={(e) => {
+                    e.currentTarget.blur();
                     document.getElementById('add_staff_modal').showModal();
                 }}
                 className="px-4 bg-blue-500 hover:bg-linear-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center gap-1 m-5"
@@ -95,7 +91,7 @@ const ManageStaff = () => {
                         </tr>
                     </thead>
                     {
-                        staffs.map((staff, i) => <tbody key={staff._id}>
+                      staffs.length > 0 ?  staffs.map((staff, i) => <tbody key={staff._id}>
                             {/* row 1 */}
                             <tr>
                                 <td>{i+1}</td>
@@ -129,7 +125,7 @@ const ManageStaff = () => {
                                 </td>
 
                             </tr>
-                        </tbody>)
+                        </tbody>) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No Staff Available</div></></>
                     }
                 </table>
             </div>

@@ -15,6 +15,9 @@ import Details from "../Pages/Card/Details";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import ManageUsers from "../Pages/Dashboard/ManageUsers";
 import ManageStaff from "../Pages/Dashboard/ManageStaff";
+import AssignedIssues from "../Pages/Dashboard/AssignedIssues";
+import AdminRoute from "./AdminRoute";
+import DashboardAllIssues from "../Pages/Dashboard/DashboardAllIssues";
 
 export const router = createBrowserRouter([
   {
@@ -63,9 +66,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "report-issue",
-        element: <PrivateRoute>
-          <ReportAnIssue></ReportAnIssue>
-        </PrivateRoute>
+        element: <ReportAnIssue></ReportAnIssue>
       },
       {
         path: "my-issue",
@@ -73,15 +74,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>
+        element: <AdminRoute><PaymentHistory></PaymentHistory></AdminRoute>
+      },
+      {
+        path: "all-issues",
+        element: <AdminRoute><DashboardAllIssues></DashboardAllIssues></AdminRoute>
       },
       {
         path: "manage-users",
-        element: <ManageUsers></ManageUsers>
+        element: <AdminRoute><ManageUsers></ManageUsers></AdminRoute>
       },
       {
         path: "manage-staff",
-        element: <ManageStaff></ManageStaff>
+        element: <AdminRoute><ManageStaff></ManageStaff></AdminRoute>
+      },
+      {
+        path: "assigned-issues",
+        element: <AssignedIssues></AssignedIssues>
       },
     ]
   },

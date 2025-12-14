@@ -1,10 +1,12 @@
 import React from 'react';
-import { FaHome, FaUsersCog } from 'react-icons/fa';
+import { FaClipboardList, FaHome, FaTasks, FaUsersCog } from 'react-icons/fa';
 import { MdPayment, MdReportProblem, MdSyncProblem } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import { FaUsersGear } from "react-icons/fa6";
+import UseRole from '../Hooks/UseRole';
 
 const DashBoardLayout = () => {
+  const { role } = UseRole();
   return (
     <div className="drawer lg:drawer-open w-11/12 mx-auto min-h-screen">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -45,6 +47,18 @@ const DashBoardLayout = () => {
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="My Issue"><MdSyncProblem size={22} /><span className="is-drawer-close:hidden">My Issue</span></button></NavLink>
             </li>
             <li>
+              <NavLink to={"/dashboard/all-issues"} className={({ isActive }) =>
+                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="All Issues"><FaClipboardList size={22} /><span className="is-drawer-close:hidden">All Issues</span></button></NavLink>
+            </li>
+            <li>
+              <NavLink to={"/dashboard/assigned-issues"} className={({ isActive }) =>
+                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Assigned issues"><FaTasks size={22} /><span className="is-drawer-close:hidden">Assigned issues</span></button></NavLink>
+            </li>
+           {
+            role === 'admin'? <>
+             <li>
               <NavLink to={"/dashboard/payment-history"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Payment History"><MdPayment size={22} /><span className="is-drawer-close:hidden">Payment History</span></button></NavLink>
@@ -58,7 +72,8 @@ const DashBoardLayout = () => {
               <NavLink to={"/dashboard/manage-staff"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage Staff"><FaUsersCog size={22} /><span className="is-drawer-close:hidden">Manage Staff</span></button></NavLink>
-            </li>
+            </li></> : <></>
+           }
 
           </ul>
         </div>

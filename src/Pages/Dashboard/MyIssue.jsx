@@ -32,7 +32,7 @@ const MyIssue = () => {
                     </tr>
                 </thead>
                 {
-                    issue.map((issue) => <tbody key={issue._id}>
+                  issue.length > 0 ?  issue.map((issue) => <tbody key={issue._id}>
                         {/* row 1 */}
                         <tr>
                             <td>
@@ -73,7 +73,7 @@ const MyIssue = () => {
                             </td>
 
                         </tr>
-                    </tbody>)
+                    </tbody>): <><div className='m-8 text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
                 }
             </table>
         </div>

@@ -62,7 +62,7 @@ const ManageUsers = () => {
                     </tr>
                 </thead>
                 {
-                    users.map((user, i) => <tbody key={user._id}>
+                  users.length > 0?  users.map((user, i) => <tbody key={user._id}>
                         {/* row 1 */}
                         <tr>
                             <td>{i + 1}</td>
@@ -107,7 +107,7 @@ const ManageUsers = () => {
                             </td>
 
                         </tr>
-                    </tbody>)
+                    </tbody>) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No User Available</div></></>
                 }
             </table>
         </div>

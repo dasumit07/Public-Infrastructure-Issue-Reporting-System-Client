@@ -30,7 +30,8 @@ const Login = () => {
         navigate(from);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         Swal.fire('No account found with this email. Please sign up first.');
       });
 

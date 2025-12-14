@@ -29,7 +29,7 @@ const PaymentHistory = () => {
                     </thead>
                     <tbody>
                         {
-                            payments.map((payment, i) =>
+                         payments.length > 0 ?   payments.map((payment, i) =>
                                  <tr key={payment.issueId}>
                             <th>{i+1}</th>
                             <td>{payment.transactionId}</td>
@@ -38,7 +38,7 @@ const PaymentHistory = () => {
                             <td>{payment.email}</td>
                             <td>{payment.paidAt}</td>
                         </tr>
-                            )
+                            ) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No Payment Available</div></></>
                         }
                        
                     </tbody>
