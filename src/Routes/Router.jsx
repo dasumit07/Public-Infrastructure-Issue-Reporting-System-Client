@@ -18,6 +18,7 @@ import ManageStaff from "../Pages/Dashboard/ManageStaff";
 import AssignedIssues from "../Pages/Dashboard/AssignedIssues";
 import AdminRoute from "./AdminRoute";
 import DashboardAllIssues from "../Pages/Dashboard/DashboardAllIssues";
+import StaffRoute from "./StaffRoute";
 
 export const router = createBrowserRouter([
   {
@@ -90,7 +91,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "assigned-issues",
-        element: <AssignedIssues></AssignedIssues>
+        element: <StaffRoute><AssignedIssues></AssignedIssues></StaffRoute>
       },
     ]
   },

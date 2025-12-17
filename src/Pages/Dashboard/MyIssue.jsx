@@ -6,21 +6,27 @@ import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { useState } from 'react';
 import EditButton from '../../Hooks/EditButton';
 import DeleteButton from '../../Hooks/DeleteButton';
+import Loading from '../Loading';
 
 const MyIssue = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
     const { user } = UseAuth();
     const axiosSecure = UseAxiosSecure();
-    const { data: issue = [], refetch } = useQuery({
+    const { data: issue = [], refetch, isLoading } = useQuery({
         queryKey: ['my-issue', user.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/issues?email=${user.email}`);
             return res.data;
         }
     })
-    
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div className="overflow-x-auto">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
+                My Issues
+            </h1>
             <table className="table">
                 {/* head */}
                 <thead>
@@ -32,7 +38,7 @@ const MyIssue = () => {
                     </tr>
                 </thead>
                 {
-                  issue.length > 0 ?  issue.map((issue) => <tbody key={issue._id}>
+                    issue.length > 0 ? issue.map((issue) => <tbody key={issue._id}>
                         {/* row 1 */}
                         <tr>
                             <td>
@@ -53,8 +59,11 @@ const MyIssue = () => {
                                 <span
                                     className={`px-3 py-1  rounded-full text-white text-xs
             ${issue.status === "pending" ? "bg-yellow-500" : ""}
+            ${issue.status === "in progress" ? "bg-blue-600" : ""}
+            ${issue.status === "working" ? "bg-blue-600" : ""}
             ${issue.status === "resolved" ? "bg-green-600" : ""}
-            ${issue.status === "In Progress" ? "bg-blue-600" : ""}
+            ${issue.status === "closed" ? "bg-gray-600" : ""}
+            
           `}
                                 >
                                     {issue.status}
@@ -73,7 +82,7 @@ const MyIssue = () => {
                             </td>
 
                         </tr>
-                    </tbody>): <><div className='m-8 text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
+                    </tbody>) : <><div className='m-8 text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
                 }
             </table>
         </div>

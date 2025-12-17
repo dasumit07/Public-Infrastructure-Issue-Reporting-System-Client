@@ -5,19 +5,21 @@ import { FaTasks } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 import { MdOutlineAssignmentTurnedIn } from 'react-icons/md';
+import Loading from '../Loading';
 
 const DashboardAllIssues = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
     const staffModalRef = useRef();
     const axiosSecure = UseAxiosSecure();
 
-    const { data: issues = [], refetch } = useQuery({
+    const { data: issues = [], refetch , isLoading } = useQuery({
         queryKey: ['dashboard-all-issues'],
         queryFn: async () => {
             const res = await axiosSecure.get('/issues/all');
             return res.data;
         }
     })
+    
     const { data: staffs = [], } = useQuery({
         queryKey: ['assign-staffs'],
         queryFn: async () => {
@@ -25,6 +27,9 @@ const DashboardAllIssues = () => {
             return res.data;
         }
     })
+    if(isLoading){
+        return <Loading></Loading>
+    }
     const openAssignStaffModal = (issue) => {
         setSelectedIssue(issue)
         staffModalRef.current.showModal()
@@ -45,7 +50,7 @@ const DashboardAllIssues = () => {
             staffModalRef.current.close();
             setSelectedIssue(null);
             Swal.fire("Staff assigned successfully");
-            refetch(); // issues refetch
+            refetch(); 
         } catch (error) {
             toast.error(error.response?.data?.message || "Assignment failed");
         }
@@ -69,6 +74,9 @@ const DashboardAllIssues = () => {
 
     return (
         <div className="overflow-x-auto">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
+                All issues
+            </h1>
             <table className="table">
                 {/* head */}
                 <thead>

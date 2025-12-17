@@ -3,16 +3,20 @@ import React from 'react';
 import UseAxiosSecure from '../Hooks/UseAxiosSecure';
 import { Link } from 'react-router';
 import Card from './Card/Card';
+import Loading from './Loading';
 
 const AllIssues = () => {
     const axiosSecure = UseAxiosSecure();
-    const { data: issues = [] } = useQuery({
+    const { data: issues = [], isLoading } = useQuery({
         queryKey: ['all-issues' ],
         queryFn: async () =>{
             const res = await axiosSecure.get('/issues/all');
             return res.data;
         }
     })
+    if(isLoading){
+            return <Loading></Loading>
+        }
     return (
         <div className='mt-20' >
 

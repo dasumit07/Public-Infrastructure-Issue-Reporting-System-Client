@@ -35,8 +35,10 @@ const DashBoardLayout = () => {
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Home Page"><FaHome size={20} /><span className="is-drawer-close:hidden">Home Page</span></button></NavLink>
             </li>
 
-
-            <li>
+            {/* users only routes */}
+            {
+              role === 'user' ? <>
+              <li>
               <NavLink to={"/dashboard/report-issue"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Report Issue"><MdReportProblem size={20} /><span className="is-drawer-close:hidden">Report Issue</span></button></NavLink>
@@ -45,35 +47,44 @@ const DashBoardLayout = () => {
               <NavLink to={"/dashboard/my-issue"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="My Issue"><MdSyncProblem size={22} /><span className="is-drawer-close:hidden">My Issue</span></button></NavLink>
-            </li>
-            <li>
-              <NavLink to={"/dashboard/all-issues"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="All Issues"><FaClipboardList size={22} /><span className="is-drawer-close:hidden">All Issues</span></button></NavLink>
-            </li>
-            <li>
+            </li></> : <></>
+            }
+            
+
+            
+            {/* staff only routes */}
+            {
+              role === 'staff' ? <>
+              <li>
               <NavLink to={"/dashboard/assigned-issues"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Assigned issues"><FaTasks size={22} /><span className="is-drawer-close:hidden">Assigned issues</span></button></NavLink>
-            </li>
-           {
-            role === 'admin'? <>
-             <li>
-              <NavLink to={"/dashboard/payment-history"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Payment History"><MdPayment size={22} /><span className="is-drawer-close:hidden">Payment History</span></button></NavLink>
-            </li>
-            <li>
-              <NavLink to={"/dashboard/manage-users"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage users"><FaUsersGear size={22} /><span className="is-drawer-close:hidden">Manage users</span></button></NavLink>
-            </li>
-            <li>
-              <NavLink to={"/dashboard/manage-staff"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage Staff"><FaUsersCog size={22} /><span className="is-drawer-close:hidden">Manage Staff</span></button></NavLink>
             </li></> : <></>
-           }
+            }
+            {/* admin only routes */}
+            {
+              role === 'admin' ? <>
+                <li>
+                  <NavLink to={"/dashboard/all-issues"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="All Issues"><FaClipboardList size={22} /><span className="is-drawer-close:hidden">All Issues</span></button></NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/dashboard/payment-history"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Payment History"><MdPayment size={22} /><span className="is-drawer-close:hidden">Payment History</span></button></NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/dashboard/manage-users"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage users"><FaUsersGear size={22} /><span className="is-drawer-close:hidden">Manage users</span></button></NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/dashboard/manage-staff"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage Staff"><FaUsersCog size={22} /><span className="is-drawer-close:hidden">Manage Staff</span></button></NavLink>
+                </li></> : <></>
+            }
 
           </ul>
         </div>

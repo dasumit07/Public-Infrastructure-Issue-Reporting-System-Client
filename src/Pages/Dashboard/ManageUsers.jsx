@@ -3,16 +3,20 @@ import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { RiUserFollowLine, RiUserForbidLine } from 'react-icons/ri';
 import Swal from 'sweetalert2';
+import Loading from '../Loading';
 
 const ManageUsers = () => {
     const axiosSecure = UseAxiosSecure();
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['all-users'],
         queryFn: async () => {
             const res = await axiosSecure.get('/users');
             return res.data;
         }
     })
+    if(isLoading){
+            return <Loading></Loading>
+        }
     const handleBlockUnblock = async (user) => {
         const result = await Swal.fire({
             title: "Are you sure?",
@@ -50,6 +54,9 @@ const ManageUsers = () => {
 
     return (
         <div className="overflow-x-auto">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
+                Manage Users
+            </h1>
             <table className="table">
                 {/* head */}
                 <thead>

@@ -9,6 +9,7 @@ import DeleteButton from '../../Hooks/DeleteButton';
 import EditButton from '../../Hooks/EditButton';
 import BoostButton from '../../Hooks/BoostButton';
 import toast from 'react-hot-toast';
+import TrackingTimeline from './TrackingTimeline';
 
 const Details = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
@@ -112,7 +113,8 @@ const Details = () => {
                     }
                 </div>
             </div>
-
+            <TrackingTimeline issue={issue}></TrackingTimeline>
+            
             {
                 user.email === issue.reporterEmail ? <><div className="text-center mt-12">
                     <Link to="/dashboard/my-issue">
@@ -129,7 +131,6 @@ const Details = () => {
                         </Link>
                     </div></>
             }
-
         </div>
     );
 };

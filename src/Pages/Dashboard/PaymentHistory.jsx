@@ -1,19 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
+import Loading from "../Loading";
 
 
 const PaymentHistory = () => {
     const axiosSecure = UseAxiosSecure();
-    const { data: payments = [] } = useQuery({
+    const { data: payments = [], isLoading } = useQuery({
         queryKey: ['all-payments'],
         queryFn: async () => {
             const res = await axiosSecure.get('/all-payments');
             return res.data
         }
     })
-
+    if(isLoading){
+            return <Loading></Loading>
+        }
     return (
         <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
+                Payment History
+            </h1>
             <div className="overflow-x-auto">
                 <table className="table table-zebra">
                     {/* head */}

@@ -9,23 +9,28 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import StaffUpdate from '../../Hooks/StaffUpdate';
 import StaffDelete from '../../Hooks/StaffDelete';
+import Loading from '../Loading';
 
 const ManageStaff = () => {
     const { setLoading } = UseAuth();
     const axiosSecure = UseAxiosSecure();
-    const { data: staffs = [], refetch } = useQuery({
+    const { data: staffs = [], refetch, isLoading } = useQuery({
         queryKey: ['staffs'],
         queryFn: async () => {
             const res = await axiosSecure.get('/staffs');
             return res.data;
         }
     })
+    
     const {
         register,
         handleSubmit,
         reset,
         formState: { errors },
     } = useForm()
+    if(isLoading){
+            return <Loading></Loading>
+        }
     const handleStaff = async (data) => {
         try {
             const photoFile = data.image[0];
@@ -68,6 +73,9 @@ const ManageStaff = () => {
     };
     return (
         <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
+                Manage Staff
+            </h1>
             <button
                 onClick={(e) => {
                     e.currentTarget.blur();
