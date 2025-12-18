@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams, useSearchParams } from 'react-router';
+import { Link, useParams} from 'react-router';
 import UseAuth from '../../Hooks/UseAuth';
 import { SiBoosty } from 'react-icons/si';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import DeleteButton from '../../Hooks/DeleteButton';
 import EditButton from '../../Hooks/EditButton';
 import BoostButton from '../../Hooks/BoostButton';
-import toast from 'react-hot-toast';
 import TrackingTimeline from './TrackingTimeline';
 
 const Details = () => {
@@ -23,27 +22,7 @@ const Details = () => {
             return res.data;
         }
     })
-    const [searchParams] = useSearchParams();
-    const sessionId = searchParams.get('session_id');
-    useEffect(() => {
-        if (!sessionId) return;
-
-        const alreadyVerified = sessionStorage.getItem(`verified_${sessionId}`);
-        if (alreadyVerified) return;
-
-        sessionStorage.setItem(`verified_${sessionId}`, "true");
-
-        axiosSecure
-            .patch(`/payment-success?session_id=${sessionId}`)
-            .then((res) => {
-                refetch();
-                console.log(res.data);
-                toast.success("Your issue has been Boosted Successfully!");
-            })
-            .catch(() => {
-                toast.error("Payment verification failed!");
-            });
-    }, [sessionId, axiosSecure, refetch]);
+    
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-10 animate__animated animate__fadeInDown">
 
@@ -83,9 +62,11 @@ const Details = () => {
                         </p>
                         <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text">
                             Status : <span className={`px-3 py-1  rounded-full text-white text-xs
-            ${issue.status === "pending" ? "bg-yellow-500" : ""}
-            ${issue.status === "resolved" ? "bg-green-600" : ""}
-            ${issue.status === "In Progress" ? "bg-blue-600" : ""}
+                  ${issue.status === "pending" && "bg-yellow-500"}
+                  ${issue.status === "in_progress" && "bg-blue-500"}
+                  ${issue.status === "working" && "bg-blue-500"}
+                  ${issue.status === "resolved" && "bg-green-600"}
+                  ${issue.status === "closed" && "bg-gray-700"}
           `}> {issue.status}</span>
                         </p>
                     </div>
@@ -114,7 +95,7 @@ const Details = () => {
                 </div>
             </div>
             <TrackingTimeline issue={issue}></TrackingTimeline>
-            
+
             {
                 user.email === issue.reporterEmail ? <><div className="text-center mt-12">
                     <Link to="/dashboard/my-issue">

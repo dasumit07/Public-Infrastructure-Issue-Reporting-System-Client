@@ -14,7 +14,7 @@ const Login = () => {
   const { signInUser, setUser, setLoading } = UseAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state || '/';
+  const from = location.state?.from?.pathname || "/";
   const handleLogin = data => {
     signInUser(data.email, data.password)
       .then(result => {
@@ -27,7 +27,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500
         });
-        navigate(from);
+        navigate(from, { replace: true });
         setLoading(false);
       })
       .catch((err) => {

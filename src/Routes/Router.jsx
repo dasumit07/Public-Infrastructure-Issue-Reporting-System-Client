@@ -19,6 +19,9 @@ import AssignedIssues from "../Pages/Dashboard/AssignedIssues";
 import AdminRoute from "./AdminRoute";
 import DashboardAllIssues from "../Pages/Dashboard/DashboardAllIssues";
 import StaffRoute from "./StaffRoute";
+import DashboardHome from "../Pages/Dashboard/DashboardHome";
+import UserRoute from "./UserRoute";
+import PaymentSuccess from "../Components/PaymentSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +45,10 @@ export const router = createBrowserRouter([
       {
         path: "about-us",
         element: <AboutUs></AboutUs>
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess></PaymentSuccess>
       }
     ],
   },
@@ -66,12 +73,16 @@ export const router = createBrowserRouter([
     </PrivateRoute>,
     children: [
       {
+        index: true,
+        element: <DashboardHome></DashboardHome>
+      },
+      {
         path: "report-issue",
-        element: <ReportAnIssue></ReportAnIssue>
+        element: <UserRoute><ReportAnIssue></ReportAnIssue></UserRoute>
       },
       {
         path: "my-issue",
-        element: <MyIssue></MyIssue>
+        element: <UserRoute><MyIssue></MyIssue></UserRoute>
       },
       {
         path: "payment-history",

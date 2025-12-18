@@ -10,7 +10,9 @@ if (loading) {
     return <Loading></Loading>
     };
     if(!user){
-    return <Navigate to="/auth/login" state={location.pathname}></Navigate>
+    return <Navigate to="/auth/login"
+        state={{ from: location }}
+        replace></Navigate>
 };
     return children;
 };

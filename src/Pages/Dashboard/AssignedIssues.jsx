@@ -22,7 +22,7 @@ const AssignedIssues = () => {
     return (
         <div className="overflow-x-visible">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
-                Assigned Issues: <span className='text-red-500'>{issues.length}</span>
+                Assigned Issues
             </h1>
             <table className="table">
                 {/* head */}

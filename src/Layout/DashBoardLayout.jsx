@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaClipboardList, FaHome, FaTasks, FaUsersCog } from 'react-icons/fa';
+import { FaClipboardList, FaHome, FaTachometerAlt, FaTasks, FaUsersCog } from 'react-icons/fa';
 import { MdPayment, MdReportProblem, MdSyncProblem } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import { FaUsersGear } from "react-icons/fa6";
@@ -33,6 +33,11 @@ const DashBoardLayout = () => {
               <NavLink to={"/"} className={({ isActive }) =>
                 `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
                 }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Home Page"><FaHome size={20} /><span className="is-drawer-close:hidden">Home Page</span></button></NavLink>
+            </li>
+            <li>
+              <NavLink to={"/dashboard"} end className={({ isActive }) =>
+                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Dashboard"><FaTachometerAlt size={20} /><span className="is-drawer-close:hidden">Dashboard</span></button></NavLink>
             </li>
 
             {/* users only routes */}

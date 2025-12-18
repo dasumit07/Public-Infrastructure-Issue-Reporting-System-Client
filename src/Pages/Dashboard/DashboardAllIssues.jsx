@@ -113,8 +113,11 @@ const DashboardAllIssues = () => {
                                 <span
                                     className={`px-3 py-1  rounded-full text-white text-xs
             ${issue.status === "pending" ? "bg-yellow-500" : ""}
+            ${issue.status === "in_progress" ? "bg-blue-600" : ""}
+            ${issue.status === "working" ? "bg-blue-600" : ""}
             ${issue.status === "resolved" ? "bg-green-600" : ""}
-            ${issue.status === "In Progress" ? "bg-blue-600" : ""}
+            ${issue.status === "closed" ? "bg-gray-600" : ""}
+            
           `}
                                 >
                                     {issue.status}
