@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { RiUserFollowLine, RiUserForbidLine } from 'react-icons/ri';
 import Swal from 'sweetalert2';
 import Loading from '../Loading';
+import { MdWorkspacePremium } from 'react-icons/md';
 
 const ManageUsers = () => {
     const axiosSecure = UseAxiosSecure();
@@ -14,9 +15,9 @@ const ManageUsers = () => {
             return res.data;
         }
     })
-    if(isLoading){
-            return <Loading></Loading>
-        }
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     const handleBlockUnblock = async (user) => {
         const result = await Swal.fire({
             title: "Are you sure?",
@@ -69,7 +70,7 @@ const ManageUsers = () => {
                     </tr>
                 </thead>
                 {
-                  users.length > 0?  users.map((user, i) => <tbody key={user._id}>
+                    users.length > 0 ? users.map((user, i) => <tbody key={user._id}>
                         {/* row 1 */}
                         <tr>
                             <td>{i + 1}</td>
@@ -83,7 +84,11 @@ const ManageUsers = () => {
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="font-bold">{user.displayName}</div>
+                                        <div className="font-bold">{user.displayName}    {user.isPremium && (
+                                            <span className="badge badge-warning text-white">
+                                                <MdWorkspacePremium /> Premium
+                                            </span>
+                                        )}</div>
                                     </div>
                                 </div>
                             </td>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import { Link, useParams} from 'react-router';
+import { Link, useParams } from 'react-router';
 import UseAuth from '../../Hooks/UseAuth';
 import { SiBoosty } from 'react-icons/si';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
@@ -9,6 +9,8 @@ import DeleteButton from '../../Hooks/DeleteButton';
 import EditButton from '../../Hooks/EditButton';
 import BoostButton from '../../Hooks/BoostButton';
 import TrackingTimeline from './TrackingTimeline';
+import { IoMdWarning } from 'react-icons/io';
+import { AiFillLike } from 'react-icons/ai';
 
 const Details = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
@@ -22,7 +24,14 @@ const Details = () => {
             return res.data;
         }
     })
-    
+    const { data: profile } = useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/profile");
+            return res.data;
+        }
+    });
+    const isBlocked = profile?.status === "blocked";
     return (
         <div className="max-w-5xl mx-auto px-6 py-16 mt-10 animate__animated animate__fadeInDown">
 
@@ -67,19 +76,45 @@ const Details = () => {
                   ${issue.status === "working" && "bg-blue-500"}
                   ${issue.status === "resolved" && "bg-green-600"}
                   ${issue.status === "closed" && "bg-gray-700"}
+                  ${issue.status === "rejected" ? "bg-red-600" : ""}
           `}> {issue.status}</span>
                         </p>
                     </div>
-                    {issue.priority === 'High' ? <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text  mb-3">Priority : <span className='bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text'>
+                    <div className='flex justify-between items-center'>
+                        {issue.priority === 'High' ? <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text  mb-3">Priority : <span className='bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text'>
                         {issue.priority}</span></p> :
                         <p className="text-lg font-semibold bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text  mb-3">Priority : <span className='bg-linear-to-r from-gray-700 to-gray-500 text-transparent bg-clip-text'>
                             {issue.priority}</span></p>}
+                            <p className='flex text-teal-700 items-center gap-1 text-lg font-semibold'>Total UpVotes:<span className='flex items-center gap-2 text-xl text-black'><AiFillLike />
+                    {issue?.upVotes?.length || 0}</span></p>
+                    </div>
+                    
                     {
-                        issue?.reporterEmail === user?.email && issue?.status === 'pending' ? <div className="flex items-center justify-between mb-6">
-                            <EditButton issue={issue} setSelectedIssue={setSelectedIssue} refetch={refetch} selectedIssue={selectedIssue}></EditButton>
-                            <DeleteButton issue={issue} refetch={refetch}  ></DeleteButton>
-
-                        </div> : null
+                        issue?.reporterEmail === user?.email &&
+                            issue?.status === 'pending' &&
+                            !isBlocked ? (
+                            <div className="flex items-center justify-between mb-6">
+                                <EditButton
+                                    issue={issue}
+                                    setSelectedIssue={setSelectedIssue}
+                                    refetch={refetch}
+                                    selectedIssue={selectedIssue}
+                                />
+                                <DeleteButton
+                                    issue={issue}
+                                    refetch={refetch}
+                                />
+                            </div>
+                        ) : null
+                    }
+                    {
+                        issue?.reporterEmail === user?.email &&
+                        issue?.status === 'pending' &&
+                        isBlocked && (
+                            <div className="alert alert-error mb-6">
+                                <IoMdWarning /> Your account is blocked. You cannot edit or delete issues.
+                            </div>
+                        )
                     }
                     {
                         issue.paymentStatus === 'paid' ? <>
@@ -89,11 +124,18 @@ const Details = () => {
                             >
                                 <SiBoosty /> <span>Boosted</span> <IoCheckmarkDoneSharp />
                             </button></> : <>
-                            <BoostButton issue={issue}></BoostButton>
+                            <BoostButton issue={issue} isBlocked={isBlocked}></BoostButton>
                         </>
                     }
                 </div>
             </div>
+            {issue.assignedStaff && (
+                <div className="mt-6 p-4 border rounded-lg bg-gray-50 md:w-1/2">
+                    <h2 className="text-lg font-semibold mb-2 bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text">Assigned Staff</h2>
+                    <p className='bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text'><span className="font-medium">Name:</span> {issue.assignedStaff.name}</p>
+                    <p className='bg-linear-to-r from-teal-700 to-teal-500 text-transparent bg-clip-text'><span className="font-medium">Email:</span> {issue.assignedStaff.email}</p>
+                </div>
+            )}
             <TrackingTimeline issue={issue}></TrackingTimeline>
 
             {

@@ -6,6 +6,8 @@ import UseAxiosSecure from '../../Hooks/UseAxiosSecure';
 import axios from 'axios';
 import UseAuth from '../../Hooks/UseAuth';
 import { useNavigate } from 'react-router';
+import { useQuery } from '@tanstack/react-query';
+import { IoMdWarning } from 'react-icons/io';
 
 const ReportAnIssue = () => {
     const axiosSecure = UseAxiosSecure();
@@ -16,58 +18,76 @@ const ReportAnIssue = () => {
         handleSubmit,
         formState: { errors },
     } = useForm()
+    const { data: profile } = useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/profile");
+            return res.data;
+        }
+    });
+    const { data: myIssues = [] } = useQuery({
+        queryKey: ["myIssues"],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/issues?email=${user?.email}`);
+            return res.data;
+        },
+        enabled: !!user?.email
+    });
+    const isFreeUser = profile && !profile.isPremium;
+    const issueLimitReached = isFreeUser && myIssues.length >= 3;
+    const isBlocked = profile?.status === "blocked";
     const onSubmit = async (data) => {
-  Swal.fire({
-    title: "Are you sure you want to report this issue?",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes!",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        
-        const imageFile = data.image[0];
-        const formData = new FormData();
-        formData.append("image", imageFile);
-
-        const uploadRes = await axios.post(
-          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageApiKey}`,
-          formData
-        );
-
-        const imageUrl = uploadRes.data.data.display_url;
-
-       
-        const issueData = {
-          reporterName: user?.displayName || "Anonymous",
-          reporterEmail: user?.email || "Not Provided",
-          title: data.title,
-          description: data.description,
-          category: data.category,
-          imageUrl: imageUrl,
-          location: data.location,
-          status: "pending",
-          createdAt: new Date(),
-        };
-
-     
-        await axiosSecure.post("/issues", issueData);
-
         Swal.fire({
-          title: "Reported!",
-          text: "Your issue has been reported successfully.",
-          icon: "success",
+            title: "Are you sure you want to report this issue?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes!",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+
+                    const imageFile = data.image[0];
+                    const formData = new FormData();
+                    formData.append("image", imageFile);
+
+                    const uploadRes = await axios.post(
+                        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_imageApiKey}`,
+                        formData
+                    );
+
+                    const imageUrl = uploadRes.data.data.display_url;
+
+
+                    const issueData = {
+                        reporterName: user?.displayName || "Anonymous",
+                        reporterEmail: user?.email || "Not Provided",
+                        title: data.title,
+                        description: data.description,
+                        category: data.category,
+                        imageUrl: imageUrl,
+                        location: data.location,
+                        status: "pending",
+                        createdAt: new Date(),
+                    };
+
+
+                    await axiosSecure.post("/issues", issueData);
+
+                    Swal.fire({
+                        title: "Reported!",
+                        text: "Your issue has been reported successfully.",
+                        icon: "success",
+                    });
+                    navigate("/dashboard/my-issue");
+                } catch (error) {
+                    console.error(error);
+                    Swal.fire("Error", "Something went wrong!", "error");
+                }
+            }
         });
-        navigate("/dashboard/my-issue");
-      } catch (error) {
-        console.error(error);
-        Swal.fire("Error", "Something went wrong!", "error");
-      }
-    }
-  });
-};
+    };
     return (
         <div className="max-w-xl mx-auto p-6">
             <h1 className=" mb-6 bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text text-2xl lg:text-3xl font-bold">Report an Issue !</h1>
@@ -146,11 +166,31 @@ const ReportAnIssue = () => {
                 </div>
 
                 {/* Submit */}
-                <button
-                    className="w-full  btn bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold  hover:scale-105 transition ease-in-out rounded-2xl"
-                >
-                    Submit Issue
-                </button>
+                {isBlocked ? (
+                    <div className="alert alert-error mt-4">
+                        🚫 Your account is blocked. You cannot submit issues.
+                    </div>
+                ) : issueLimitReached ? (
+                    <div className="text-center space-y-3 mt-4">
+                        <p className="text-red-500 font-medium flex items-center justify-center gap-1">
+                            <IoMdWarning /> Free users can report only 3 issues.
+                        </p>
+
+                        <button
+                            onClick={() => navigate("/dashboard/profile")}
+                            className="btn bg-yellow-500 text-white hover:bg-yellow-600 hover:scale-105 transition ease-in-out"
+                        >
+                            Upgrade to Premium
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        className="w-full btn bg-teal-500 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold hover:scale-105 transition ease-in-out rounded-2xl"
+                    >
+                        Submit Issue
+                    </button>
+                )}
+
             </form>
         </div>
     );

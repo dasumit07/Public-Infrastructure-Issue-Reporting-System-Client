@@ -22,6 +22,7 @@ import StaffRoute from "./StaffRoute";
 import DashboardHome from "../Pages/Dashboard/DashboardHome";
 import UserRoute from "./UserRoute";
 import PaymentSuccess from "../Components/PaymentSuccess";
+import DashboardProfile from "../Pages/Dashboard/DashboardProfile";
 
 export const router = createBrowserRouter([
   {
@@ -104,6 +105,10 @@ export const router = createBrowserRouter([
         path: "assigned-issues",
         element: <StaffRoute><AssignedIssues></AssignedIssues></StaffRoute>
       },
+      {
+        path:"profile",
+        element:<DashboardProfile></DashboardProfile>
+      }
     ]
   },
   {

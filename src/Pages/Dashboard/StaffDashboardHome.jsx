@@ -32,35 +32,35 @@ const StaffDashboardHome = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
 
-            <div className="stat bg-base-100 shadow">
+            <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">Assigned Issues</div>
                 <div className="stat-value text-primary">
                     {data.stats.assignedIssues}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow">
+            <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">Resolved</div>
                 <div className="stat-value text-success">
                     {data.stats.resolvedIssues}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow">
+            <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">Working</div>
                 <div className="stat-value text-warning">
                     {data.stats.working}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow">
+            <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">In Progress</div>
                 <div className="stat-value text-info">
                     {data.stats.inProgress}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow">
+            <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">Pending</div>
                 <div className="stat-value text-error">
                     {data.stats.pending}
@@ -101,6 +101,7 @@ const StaffDashboardHome = () => {
             ${task.status === "working" ? "bg-blue-600" : ""}
             ${task.status === "resolved" ? "bg-green-600" : ""}
             ${task.status === "closed" ? "bg-gray-600" : ""}
+            ${task.status === "rejected" ? "bg-red-600" : ""}
             
           `}>
                 {task.status}

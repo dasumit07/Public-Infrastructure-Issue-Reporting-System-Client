@@ -61,35 +61,35 @@ const CitizenDashboardHome = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
 
-            <div className="stat bg-base-100 shadow rounded-xl">
+            <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">Total Issues</div>
                 <div className="stat-value text-primary">
                     {data.issueStats.totalIssues}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow rounded-xl">
+            <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">Pending</div>
                 <div className="stat-value text-error">
                     {data.issueStats.pending}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow rounded-xl">
+            <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">In Progress</div>
                 <div className="stat-value text-info">
                     {data.issueStats.inProgress}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow rounded-xl">
+            <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">Working</div>
                 <div className="stat-value text-warning">
                     {data.issueStats.working}
                 </div>
             </div>
 
-            <div className="stat bg-base-100 shadow rounded-xl">
+            <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">Resolved</div>
                 <div className="stat-value text-success">
                     {data.issueStats.resolved}

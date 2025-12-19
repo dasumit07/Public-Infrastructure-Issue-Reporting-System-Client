@@ -63,6 +63,7 @@ const MyIssue = () => {
             ${issue.status === "working" ? "bg-blue-600" : ""}
             ${issue.status === "resolved" ? "bg-green-600" : ""}
             ${issue.status === "closed" ? "bg-gray-600" : ""}
+            ${issue.status === "rejected" ? "bg-red-600" : ""}
             
           `}
                                 >

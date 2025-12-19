@@ -12,9 +12,9 @@ const PaymentHistory = () => {
             return res.data
         }
     })
-    if(isLoading){
-            return <Loading></Loading>
-        }
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
@@ -27,7 +27,7 @@ const PaymentHistory = () => {
                         <tr>
                             <th>#</th>
                             <th>Transaction ID</th>
-                            <th>Issue Name</th>
+                            <th>Name</th>
                             <th>Paid Amount</th>
                             <th>Paid By</th>
                             <th>Paid At</th>
@@ -35,18 +35,20 @@ const PaymentHistory = () => {
                     </thead>
                     <tbody>
                         {
-                         payments.length > 0 ?   payments.map((payment, i) =>
-                                 <tr key={payment.issueId}>
-                            <th>{i+1}</th>
-                            <td>{payment.transactionId}</td>
-                            <td>{payment.issueName}</td>
-                            <td>${payment.amount}</td>
-                            <td>{payment.email}</td>
-                            <td>{payment.paidAt}</td>
-                        </tr>
+                            payments.length > 0 ? payments.map((payment, i) =>
+                                <tr key={payment.issueId}>
+                                    <th>{i + 1}</th>
+                                    <td>{payment.transactionId}</td>
+                                    {
+                                        payment?.issueName ? <td>{payment.issueName}</td> : <td>{payment.name}</td>
+                                    }
+                                    <td>${payment.amount}</td>
+                                    <td>{payment.email}</td>
+                                    <td>{payment.paidAt}</td>
+                                </tr>
                             ) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No Payment Available</div></></>
                         }
-                       
+
                     </tbody>
                 </table>
             </div>

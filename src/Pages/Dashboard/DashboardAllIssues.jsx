@@ -12,14 +12,14 @@ const DashboardAllIssues = () => {
     const staffModalRef = useRef();
     const axiosSecure = UseAxiosSecure();
 
-    const { data: issues = [], refetch , isLoading } = useQuery({
+    const { data: issues = [], refetch, isLoading } = useQuery({
         queryKey: ['dashboard-all-issues'],
         queryFn: async () => {
             const res = await axiosSecure.get('/issues/all');
             return res.data;
         }
     })
-    
+
     const { data: staffs = [], } = useQuery({
         queryKey: ['assign-staffs'],
         queryFn: async () => {
@@ -27,7 +27,7 @@ const DashboardAllIssues = () => {
             return res.data;
         }
     })
-    if(isLoading){
+    if (isLoading) {
         return <Loading></Loading>
     }
     const openAssignStaffModal = (issue) => {
@@ -50,7 +50,7 @@ const DashboardAllIssues = () => {
             staffModalRef.current.close();
             setSelectedIssue(null);
             Swal.fire("Staff assigned successfully");
-            refetch(); 
+            refetch();
         } catch (error) {
             toast.error(error.response?.data?.message || "Assignment failed");
         }
@@ -117,6 +117,7 @@ const DashboardAllIssues = () => {
             ${issue.status === "working" ? "bg-blue-600" : ""}
             ${issue.status === "resolved" ? "bg-green-600" : ""}
             ${issue.status === "closed" ? "bg-gray-600" : ""}
+            ${issue.status === "rejected" ? "bg-red-600" : ""}
             
           `}
                                 >
@@ -130,14 +131,16 @@ const DashboardAllIssues = () => {
                                 <div className={`font-bold ${issue.priority === 'High' ? 'text-red-500' : 'text-gray-500'}`}>{issue.priority}</div>
                             </td>
                             <td>
-                                {issue.assignedStaff ? (
+                                {issue.status === 'rejected' ? (
+                                    <span className="text-red-500 font-semibold">Rejected</span>
+                                ) : issue.assignedStaff ? (
                                     <span className="text-green-600 font-semibold flex items-center gap-1">
-                                       <MdOutlineAssignmentTurnedIn size={20} /> {issue.assignedStaff.name}
+                                        <MdOutlineAssignmentTurnedIn size={20} /> {issue.assignedStaff.name}
                                     </span>
                                 ) : (
                                     <button
                                         onClick={() => openAssignStaffModal(issue)}
-                                        className="bg-teal-600  px-4 text-sm hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center gap-1"
+                                        className="bg-teal-600 px-4 text-sm text-white rounded-2xl py-2 flex items-center gap-1 hover:scale-105 transition ease-in-out"
                                     >
                                         <FaTasks /> Assign staff
                                     </button>

@@ -2,20 +2,21 @@ import React from 'react';
 import { FiAlertCircle } from 'react-icons/fi';
 import { SiBoosty } from 'react-icons/si';
 import UseAxiosSecure from './UseAxiosSecure';
+import { IoMdWarning } from 'react-icons/io';
 
-const BoostButton = ({issue}) => {
+const BoostButton = ({ issue, isBlocked }) => {
     const axiosSecure = UseAxiosSecure();
-    const handleBoost = async(issue) => {
-            const paymentInfo = {
-                issueId: issue._id,
-                title: issue.title,
-                reporterEmail: issue.reporterEmail,
-                trackingId: issue.trackingId
-            }
-            const res = await axiosSecure.post('/create-payment-intent', paymentInfo);
-            window.location.href = res.data.url;
-            
-        };
+    const handleBoost = async (issue) => {
+        const paymentInfo = {
+            issueId: issue._id,
+            title: issue.title,
+            reporterEmail: issue.reporterEmail,
+            trackingId: issue.trackingId
+        }
+        const res = await axiosSecure.post('/create-payment-intent', paymentInfo);
+        window.location.href = res.data.url;
+
+    };
     return (
         <div>
             <div
@@ -39,12 +40,18 @@ const BoostButton = ({issue}) => {
                     </p>
                 </div>
             </div>
-            <button
-                onClick={() => handleBoost(issue)}
-                className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
-            >
-                <SiBoosty /> <span>Boost</span>
-            </button>
+            {isBlocked ? (
+                <div className="alert alert-error mt-3">
+                    <IoMdWarning /> Your account is blocked. You cannot boost issues.
+                </div>
+            ) : (
+                <button
+                    onClick={() => handleBoost(issue)}
+                    className="btn w-full bg-teal-400 hover:bg-linear-to-r from-teal-700 to-teal-500 text-white font-semibold rounded-2xl py-2 hover:scale-105 transition ease-in-out flex items-center justify-center gap-2"
+                >
+                    <SiBoosty /> <span>Boost</span>
+                </button>
+            )}
         </div>
     );
 };

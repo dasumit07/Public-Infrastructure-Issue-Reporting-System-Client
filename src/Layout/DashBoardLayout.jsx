@@ -4,6 +4,7 @@ import { MdPayment, MdReportProblem, MdSyncProblem } from 'react-icons/md';
 import { Link, NavLink, Outlet } from 'react-router';
 import { FaUsersGear } from "react-icons/fa6";
 import UseRole from '../Hooks/UseRole';
+import { CgProfile } from 'react-icons/cg';
 
 const DashBoardLayout = () => {
   const { role } = UseRole();
@@ -43,28 +44,28 @@ const DashBoardLayout = () => {
             {/* users only routes */}
             {
               role === 'user' ? <>
-              <li>
-              <NavLink to={"/dashboard/report-issue"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Report Issue"><MdReportProblem size={20} /><span className="is-drawer-close:hidden">Report Issue</span></button></NavLink>
-            </li>
-            <li>
-              <NavLink to={"/dashboard/my-issue"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="My Issue"><MdSyncProblem size={22} /><span className="is-drawer-close:hidden">My Issue</span></button></NavLink>
-            </li></> : <></>
+                <li>
+                  <NavLink to={"/dashboard/report-issue"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Report Issue"><MdReportProblem size={20} /><span className="is-drawer-close:hidden">Report Issue</span></button></NavLink>
+                </li>
+                <li>
+                  <NavLink to={"/dashboard/my-issue"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="My Issue"><MdSyncProblem size={22} /><span className="is-drawer-close:hidden">My Issue</span></button></NavLink>
+                </li></> : <></>
             }
-            
 
-            
+
+
             {/* staff only routes */}
             {
               role === 'staff' ? <>
-              <li>
-              <NavLink to={"/dashboard/assigned-issues"} className={({ isActive }) =>
-                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
-                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Assigned issues"><FaTasks size={22} /><span className="is-drawer-close:hidden">Assigned issues</span></button></NavLink>
-            </li></> : <></>
+                <li>
+                  <NavLink to={"/dashboard/assigned-issues"} className={({ isActive }) =>
+                    `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                    }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Assigned issues"><FaTasks size={22} /><span className="is-drawer-close:hidden">Assigned issues</span></button></NavLink>
+                </li></> : <></>
             }
             {/* admin only routes */}
             {
@@ -90,7 +91,11 @@ const DashBoardLayout = () => {
                     }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="Manage Staff"><FaUsersCog size={22} /><span className="is-drawer-close:hidden">Manage Staff</span></button></NavLink>
                 </li></> : <></>
             }
-
+            <li>
+              <NavLink to={"/dashboard/profile"} className={({ isActive }) =>
+                `hover:scale-105 transition ease-in-out ${isActive ? 'text-teal-600 font-bold' : 'hover:text-teal-400'
+                }`}><button className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-1" data-tip="My Profile"><CgProfile size={22} /><span className="is-drawer-close:hidden">My Profile</span></button></NavLink>
+            </li>
           </ul>
         </div>
       </div>

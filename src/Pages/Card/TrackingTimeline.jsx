@@ -33,6 +33,7 @@ const TrackingTimeline = ({ issue }) => {
                   ${item.status === "working" && "bg-blue-500"}
                   ${item.status === "resolved" && "bg-green-600"}
                   ${item.status === "closed" && "bg-gray-700"}
+                  ${item.status === "rejected" ? "bg-red-600" : ""}
                 `}>
                                             {item.status}
                                         </span>
