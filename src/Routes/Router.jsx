@@ -79,7 +79,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "report-issue",
-        element: <UserRoute><ReportAnIssue></ReportAnIssue></UserRoute>
+        element:<ReportAnIssue></ReportAnIssue>
       },
       {
         path: "my-issue",

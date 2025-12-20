@@ -6,6 +6,7 @@ import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import UseAuth from "../../Hooks/UseAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const Card = ({ issue }) => {
     const axiosSecure = UseAxiosSecure();
@@ -17,7 +18,14 @@ const Card = ({ issue }) => {
     const [hasUpvoted, setHasUpvoted] = useState(
         issue.upVotes?.includes(user?.email)
     );
-    console.log(user)
+    const { data: profile } = useQuery({
+        queryKey: ["profile"],
+        queryFn: async () => {
+            const res = await axiosSecure.get("/profile");
+            return res.data;
+        }
+    });
+    const isBlocked = profile?.status === "blocked";
     const handleUpvote = async () => {
 
         if (!user) {
@@ -60,7 +68,7 @@ const Card = ({ issue }) => {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-md p-4 w-full max-w-sm border hover:shadow-lg transition">
+        <div className="bg-white rounded-2xl shadow-md p-4 w-full max-w-sm border hover:shadow-lg transition animate__animated animate__fadeInDown">
             {/* Image */}
             <img
                 src={issue.imageUrl}
@@ -105,12 +113,12 @@ const Card = ({ issue }) => {
                 {/* Upvote */}
                 <button
                     onClick={handleUpvote}
-                    disabled={hasUpvoted}
+                    disabled={hasUpvoted || isBlocked}
                     className={`flex items-center gap-1 text-sm px-3 py-1 rounded-full transition
-            ${hasUpvoted
-                            ? "bg-green-100 text-green-700 cursor-not-allowed"
+                   ${hasUpvoted || isBlocked
+                            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
                             : "bg-gray-100 hover:bg-gray-200"}
-          `}
+                   `}
                 >
                     <AiFillLike />
                     {upvoteCount}

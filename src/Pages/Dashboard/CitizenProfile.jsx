@@ -7,6 +7,8 @@ import { useNavigate, useSearchParams } from "react-router";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { MdWorkspacePremium } from "react-icons/md";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import ProfilePDF from './ProfilePDF';
 
 const CitizenProfile = () => {
     const axiosSecure = UseAxiosSecure();
@@ -103,7 +105,7 @@ const CitizenProfile = () => {
         const photoURL = imgRes.data.data.display_url;
         const updateData = {
             displayName: data?.displayName,
-            photoURL:  photoURL
+            photoURL: photoURL
         }
         updateProfileMutation.mutate(updateData);
     };
@@ -111,7 +113,7 @@ const CitizenProfile = () => {
     if (isLoading) return <Loading></Loading>
 
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-base-100 shadow-xl rounded-2xl">
+        <div className="max-w-3xl mx-auto p-6 bg-base-100 shadow-xl rounded-2xl animate__animated animate__fadeIn">
 
             {/* PROFILE HEADER */}
             <div className="flex flex-col items-center gap-4">
@@ -131,6 +133,22 @@ const CitizenProfile = () => {
                 </h2>
 
                 <p className="text-gray-500">{user.email}</p>
+                <div className="mt-4">
+                    <PDFDownloadLink
+                        document={<ProfilePDF user={user} />}
+                        fileName={`profile-${user.displayName}.pdf`}
+                    >
+                        {({ loading }) =>
+                            loading ? (
+                                <span className="text-sm text-gray-500">Preparing PDF...</span>
+                            ) : (
+                                <button className="btn btn-sm btn-outline btn-secondary">
+                                    Download Profile PDF
+                                </button>
+                            )
+                        }
+                    </PDFDownloadLink>
+                </div>
             </div>
 
             {/* BLOCKED WARNING */}

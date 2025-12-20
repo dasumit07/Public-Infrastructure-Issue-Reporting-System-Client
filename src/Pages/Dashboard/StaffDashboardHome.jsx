@@ -30,7 +30,7 @@ const StaffDashboardHome = () => {
         return <Loading></Loading>
     }
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 animate__animated animate__fadeIn">
 
             <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">
                 <div className="stat-title">Assigned Issues</div>

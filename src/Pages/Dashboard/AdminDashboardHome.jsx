@@ -42,7 +42,7 @@ const AdminDashboardHome = () => {
     }
     console.log(data)
     return (
-        <div className="space-y-6">
+        <div className="space-y-6 animate__animated animate__fadeIn">
 
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 <div className="stat bg-base-100 shadow hover:shadow-md transition-shadow">

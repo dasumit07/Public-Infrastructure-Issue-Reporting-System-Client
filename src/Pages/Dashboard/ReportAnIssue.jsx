@@ -89,7 +89,7 @@ const ReportAnIssue = () => {
         });
     };
     return (
-        <div className="max-w-xl mx-auto p-6">
+        <div className="max-w-xl mx-auto p-6 animate__animated animate__fadeIn">
             <h1 className=" mb-6 bg-linear-to-r from-red-700 to-red-500 text-transparent bg-clip-text text-2xl lg:text-3xl font-bold">Report an Issue !</h1>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">

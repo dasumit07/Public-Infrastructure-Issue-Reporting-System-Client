@@ -10,23 +10,54 @@ import Loading from '../Loading';
 
 const MyIssue = () => {
     const [selectedIssue, setSelectedIssue] = useState(null);
+    const [statusFilter, setStatusFilter] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
     const { user } = UseAuth();
     const axiosSecure = UseAxiosSecure();
     const { data: issue = [], refetch, isLoading } = useQuery({
-        queryKey: ['my-issue', user.email],
+        queryKey: ['my-issue', user?.email, statusFilter, categoryFilter],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/issues?email=${user.email}`);
+            const params = new URLSearchParams();
+            if (user.email) params.append('email', user.email);
+            if (statusFilter) params.append('status', statusFilter);
+            if (categoryFilter) params.append('category', categoryFilter);
+
+            const res = await axiosSecure.get(`/issues?${params.toString()}`);
             return res.data;
-        }
-    })
+        },
+    });
     if (isLoading) {
         return <Loading></Loading>
     }
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto animate__animated animate__fadeIn">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
                 My Issues
             </h1>
+            <div className='md:flex gap-1 ml-3'>
+                <select className="select select-warning w-[100px]"
+                    value={statusFilter}
+                    onChange={e => setStatusFilter(e.target.value)}
+                >
+                    <option value="">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="working">Working</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+                <select className="select select-warning w-[130px]"
+                    value={categoryFilter}
+                    onChange={e => setCategoryFilter(e.target.value)}
+                >
+                    <option value="">All Categories</option>
+                    <option value="Road Damage">Road Damage</option>
+                    <option value="Street Light">Street Light</option>
+                    <option value="Garbage">Garbage</option>
+                    <option value="Water Logging">Water Logging</option>
+                    <option value="Illegal Parking">Illegal Parking</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
             <table className="table">
                 {/* head */}
                 <thead>
@@ -83,7 +114,7 @@ const MyIssue = () => {
                             </td>
 
                         </tr>
-                    </tbody>) : <><div className='m-8 text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
+                    </tbody>) : <><div className='m-8 col-span-full text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
                 }
             </table>
         </div>

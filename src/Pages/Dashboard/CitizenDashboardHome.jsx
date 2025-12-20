@@ -59,7 +59,7 @@ const CitizenDashboardHome = () => {
         return <Loading></Loading>
     }
     return (
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4 animate__animated animate__fadeIn">
 
             <div className="stat bg-base-100 shadow rounded-xl hover:shadow-md transition-shadow">
                 <div className="stat-title">Total Issues</div>

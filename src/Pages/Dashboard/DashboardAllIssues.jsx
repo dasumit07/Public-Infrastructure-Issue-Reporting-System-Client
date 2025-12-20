@@ -15,7 +15,7 @@ const DashboardAllIssues = () => {
     const { data: issues = [], refetch, isLoading } = useQuery({
         queryKey: ['dashboard-all-issues'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/issues/all');
+            const res = await axiosSecure.get('/issues/all-admin');
             return res.data;
         }
     })
@@ -73,7 +73,7 @@ const DashboardAllIssues = () => {
     };
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto animate__animated animate__fadeIn">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
                 All issues
             </h1>
@@ -157,7 +157,7 @@ const DashboardAllIssues = () => {
                                 )}
                             </td>
                         </tr>
-                    </tbody>) : <><div className='m-8 text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
+                    </tbody>) : <><div className='m-8 col-span-full text-center font-bold text-2xl text-red-500'>No Issue Available</div></>
                 }
             </table>
             <dialog ref={staffModalRef} className="modal modal-bottom sm:modal-middle">

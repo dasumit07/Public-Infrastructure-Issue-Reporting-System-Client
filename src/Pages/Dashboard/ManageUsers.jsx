@@ -54,7 +54,7 @@ const ManageUsers = () => {
     };
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto animate__animated animate__fadeIn">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
                 Manage Users
             </h1>
@@ -119,7 +119,7 @@ const ManageUsers = () => {
                             </td>
 
                         </tr>
-                    </tbody>) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No User Available</div></></>
+                    </tbody>) : <><><div className='m-8 col-span-full text-center font-bold text-2xl text-red-500'>No User Available</div></></>
                 }
             </table>
         </div>

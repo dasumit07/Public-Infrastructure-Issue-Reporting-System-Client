@@ -72,7 +72,7 @@ const ManageStaff = () => {
         }
     };
     return (
-        <div>
+        <div className='animate__animated animate__fadeIn'>
             <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-2 m-3">
                 Manage Staff
             </h1>
@@ -133,7 +133,7 @@ const ManageStaff = () => {
                                 </td>
 
                             </tr>
-                        </tbody>) : <><><div className='m-8 text-center font-bold text-2xl text-red-500'>No Staff Available</div></></>
+                        </tbody>) : <><><div className='m-8 col-span-full text-center font-bold text-2xl text-red-500'>No Staff Available</div></></>
                     }
                 </table>
             </div>

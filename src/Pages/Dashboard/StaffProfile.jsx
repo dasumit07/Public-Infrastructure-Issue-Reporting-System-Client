@@ -73,7 +73,7 @@ const StaffProfile = () => {
         return <Loading></Loading>
     }
     return (
-        <div className="max-w-3xl mx-auto p-6 bg-base-100 shadow-xl rounded-2xl">
+        <div className="max-w-3xl mx-auto p-6 bg-base-100 shadow-xl rounded-2xl animate__animated animate__fadeIn">
             {/* PROFILE HEADER */}
             <div className="flex flex-col items-center gap-4">
                 <img
