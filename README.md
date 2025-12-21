@@ -6,7 +6,7 @@ A digital platform that allows citizens to report real-world public issues such 
 
 ## Live Site
 
-[Click here to visit the live site](https://cityfix-public.netlify.app)
+[Click here to visit the live site](https://issue-reporting-system-20fc0.web.app)
 
 ---
 
