@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import Card from "./Card/Card";
 import UseAxiosSecure from "../Hooks/UseAxiosSecure";
+import Loading from "./Loading";
 
 
 const LatestResolveIssues = () => {
@@ -18,7 +19,7 @@ const LatestResolveIssues = () => {
     });
 
     if (isLoading) {
-        return <p className="text-center mt-10">Loading...</p>;
+        return <Loading></Loading>;
     }
 
     return (
